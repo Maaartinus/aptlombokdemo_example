@@ -1,0 +1,25 @@
+plugins {
+	id "net.ltgt.apt" version "0.15"
+}
+
+apply plugin: "java"
+apply plugin: "eclipse"
+
+//dependencies {
+//  compile project(':aptlombokdemo-apt')
+//}
+
+task generate(type: JavaCompile, group: "build", description: "Generates stuff") {
+	source = sourceSets.main.java
+//	classpath = configurations.compile + configurations["aptlombokdemo-apt"]
+	options.compilerArgs = [
+		"-proc:only",
+		"-processor", "de.grajcar.aptlombokdemo"
+	]
+//    destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+
+compileJava {
+	dependsOn generate
+}
